@@ -1,0 +1,304 @@
+
+import random
+
+Game_Start = input('This is a test of the first chapter of a Fire Emblem/Zorc-esque strategy game. You will get various prompts that will be in brackets such as [example]. Type the words or number in the bracket to advance the plot. Words are case sensitive. If you are ready to begin respond [START]: ')
+if Game_Start == 'START': 
+    win_con = 0
+    print('Greetings Milord. Welcome to the Great Frontier. The enemy is before us and we need your leadership. Are you ready for combat?')
+    Answer = input('Will you accept this quest? [Yes] or [No]? ')
+    refusal_count = 0 
+    while Answer != 'Yes':  
+        refusal_count += 1
+        if refusal_count >= 3: 
+            print('You ignore your calling, the enemy routs your troops. GAME OVER')
+            exit()
+        Answer = input('Please Milord we need your help! Will you accept? [Yes] or [No] ')
+    
+    print('"Excellent, a bandit captain is ahead, we already arranged for single combat. Defeat him and we will have access to their troves." A bandit lord approaches you armed with a hefty axe. Do you 1.) Attack him with your blade 2.) Command your squire to fight in your stead. 3.) Flee')
+    combat_answer = int(input("Will you fight? Respond [1], [2], or [3]: ")) 
+    if combat_answer == 1:
+        print('You easily dispatch the bandit captain. Your squire approaches you “Your bravery is noteworthy, my lord, but a common bandit is a simple adversary. You will be facing stronger foes in the future. It is important to know how to properly combat different foes. I armed you with different weapons so use them wisely. You have a sword, an axe, and spear. Your sword will do well against axe users. Your axe can shatter spears. You may have guessed this your spear keeps you at a good range to face swordsmen. Perhaps we should spar before we travel further?”')
+        sparring_answer = int(input('Your squire draws a slender steel sword and assumes an en garde position against you. Do you: [1] Attack with your own sword. [2] Use the woodsman’s axe [3] Lunge with your spear: '))
+        while sparring_answer != 3:
+            sparring_answer = int(input('"Milord no time for silly games. I am using a SWORD. Swords beat axes, axes beat spears, and SPEARS beat swords. Please fight me with the proper weapon. [1] Sword [2] Axe [3] Spear: '))
+        
+        print('''
+            Your squire is quick but your reach keeps him at bay.
+            You win the bout. They speak up, "Excellent work.
+            Your enemies will only get harder from here.
+            Examine their weapons and fight on your best chance of winning."
+            You travel through the Dark Woods and eventually reach a cave guarded by a man with an axe.
+            Upon closer examination he is asleep. Your squire speaks up
+            "Milord, we need not shed blood here.
+            We may be able to slip by him undetected [sneak chance 70%]
+            or if you must fight do it honorably."
+        ''')
+        
+        guard_answer = input('Do you choose to [sneak] or [fight]? ')
+        if guard_answer == 'sneak':
+            num = random.randint(1, 10)
+            if num >= 3:
+                print("You successfully sneak past the guard. You enter the cave and see a fork in the road")
+                road_choice = input("To the left path you hear the groaning of a creature. To the right path you see the faint glimmer of fire. Do you go [left] or [right]? ")
+            else:
+                print('The guard wakes up. You must fight!')
+                guard_answer = 'fight'                    
+        if guard_answer == 'fight':
+            print("You have chosen the warrior's route.")
+            guard_fight = int(input("You wake up the guard and he approaches menacingly with his axe. Escape is not possible. Do you [1] Draw your sword. [2] Bring out your own axe [3] Point your spear?: "))
+            if guard_fight == 1:
+                print("Your deft fencing slips past his axe and you slay the guard. You enter the cave and see the fork in the road")              
+                road_choice = input("To the left path you hear the groaning of a creature. To the right path you see the faint glimmer of fire. Do you go [left] or [right]? ")
+            elif guard_fight == 2:
+                print("Your axe clashes with his, but he overpowers you. GAME OVER")
+                exit()
+            elif guard_fight == 3:
+                print("Your spear is ineffective against his axe. He closes the distance and defeats you. GAME OVER")
+                exit()
+            
+            if road_choice == 'left':
+                print("You take the left path and trigger a trap caving in the path behind you. You cannot turn back now and you are separated from your companions. As you travel forward you see a chimera, its snake tail lunges forward like a lance, and its claws seem to resemble hatchets. No negotiations here, you must fight!")
+                chimera_fight = int(input("The creature is more cunning than your previous fights. There must be a safe choice to make. Do you fight with your [1] Sword [2] Axe [3] Spear? "))
+                chimera_attack = random.randint(1, 2)
+                if chimera_attack == 1:  # Snake tail (lance-like)
+                    if chimera_fight == 1:
+                        print("Bad move, the chimera's tail knocks your blade out of your hand, and its snake head darts forward sinking its venomous fangs in your neck. GAME OVER")  
+                        exit()
+                    elif chimera_fight == 2:                                  
+                        print("With a deft swing you behead the snake tail catching the chimera off guard. Its other heads are no match and you dispatch the beast and move forward.")  
+                        win_con += 1
+                    elif chimera_fight == 3:
+                        print("Neither you nor the beast can find an opening. You disengage.")
+                        chimera_fight = int(input("Try another tactic. Do you fight with your [1] Sword [2] Axe [3] Spear? "))
+                        if chimera_fight == 2:
+                            print("With a deft swing you behead the snake tail and dispatch the beast.")
+                            win_con += 1
+                        else:
+                            print("Your choice falters, and the chimera overwhelms you. GAME OVER")
+                            exit()
+                elif chimera_attack == 2:  # Claws (axe-like)
+                    if chimera_fight == 1:
+                        print("The tail was a distraction for the pounce, but you saw it coming. Your blade parries its claws, and as it reels back you skewer it in its chest, slaying the chimera")
+                        win_con += 1
+                    elif chimera_fight == 2:
+                        print("Neither you nor the beast can find an opening. You disengage.")
+                        chimera_fight = int(input("Try another tactic. Do you fight with your [1] Sword [2] Axe [3] Spear? "))
+                        if chimera_fight == 1:
+                            print("Your blade parries and slays the chimera.")
+                            win_con += 1
+                        else:
+                            print("Your choice falters, and the chimera overwhelms you. GAME OVER")
+                            exit()
+                    elif chimera_fight == 3:
+                        print("The chimera crushes your spear and pounces on top of you. GAME OVER")
+                        exit()
+            
+            elif road_choice == 'right': 
+                print("You go up the right and you hear the cranking of gears. A metal gate closes behind you separating you from your companions and escape. In front of you in a well-lit room is another bandit armed with a handaxe and shortsword. You must fight")
+                right_fight = int(input('The bandit waits for you to draw your weapon before attacking. Do you choose your [1] sword, [2] axe, or [3] spear? '))
+                right_attack = random.randint(1, 2)
+                if right_fight == 1:
+                    if right_attack == 1:  # Bandit uses axe
+                        print('With a flick of your blade you disarm the bandit and end his life. You continue forward')
+                        win_con += 1
+                    else:  # Bandit uses sword
+                        right_fight = int(input('Your blades cross but neither of you can get an opening. You disengage and must fight again. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if right_fight == 3:
+                            print("Your lance thrusteth sure. With the bandit dispatched you enter the next room")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                elif right_fight == 2:
+                    if right_attack == 1:  # Bandit uses axe
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+                    else:  # Bandit uses sword
+                        right_fight = int(input('Your blades cross but neither of you can get an opening. You disengage and must fight again. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if right_fight == 3:
+                            print("Your lance thrusteth sure. With the bandit dispatched you enter the next room")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                elif right_fight == 3:
+                    if right_attack == 1:  # Bandit uses axe
+                        print("Your lance thrusteth sure. With the bandit dispatched you enter the next room")
+                        win_con += 1
+                    else:  # Bandit uses sword
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+    
+    elif combat_answer == 2:    
+        print('Your squire fights in your stead, but your troops do not feel confident in your leadership. They elect the squire as ruler and abandon you. GAME OVER')
+        exit()
+    elif combat_answer == 3:
+        print('You cowardly run away. The bandits rout your troops. GAME OVER')
+        exit()
+    else:
+        print('Invalid response')
+        exit()
+
+    if win_con == 1:
+        print('''
+            You move further into the cave. 
+            Before you is the bandit leader and a hoard of loot.
+            He is entering through the other pathway.
+            The leader eyes you as well as you walk in. He speaks 
+            "You may have defeated my men, but it is no matter
+            you are not leaving this place alive.
+            Surrender now and I will grant you a quick death."
+            Just like you he is armed with three weapons. 
+            Is there a way to move the odds in your favor?
+            Or will you fight with even odds?
+        ''')
+        Boss_initial = input('Will you attempt to [disarm] (50% chance) or [fight]? ')
+        if Boss_initial == 'disarm':
+            disarm = random.randint(1, 10)
+            if disarm >= 5:
+                print('You notice the spear the leader wields is more ceremonial than functional. You break it with your axe rendering it useless for combat')
+                disarm_successful = int(input('Now only armed with sword and axe things should be easier. Do you draw your [1] sword [2] axe or [3] spear?: '))
+                boss_attack = random.randint(1, 2)  # 1: axe, 2: sword
+                if disarm_successful == 1:
+                    if boss_attack == 1:
+                        print('With fine footwork and deft blade you overwhelm the bandit and end his life.')
+                        win_con += 1
+                    else:
+                        disarm_successful = int(input('Your blades cross but neither of you can get an opening. You disengage and must fight again. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if disarm_successful == 3:
+                            print("Your lance thrusteth sure. With the bandit dispatched you win!")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                elif disarm_successful == 2:
+                    if boss_attack == 1:
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+                    else:
+                        disarm_successful = int(input('Your blades cross but neither of you can get an opening. You disengage and must fight again. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if disarm_successful == 3:
+                            print("Your lance thrusteth sure. With the bandit dispatched you win!")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                elif disarm_successful == 3:
+                    if boss_attack == 1:
+                        print("Your lance thrusteth sure. With the bandit dispatched you win!")
+                        win_con += 1
+                    else:
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+            else:
+                print('Try as you might you see no openings and there is no time for analysis. The bandit is charging at you.')
+                disarm_fail = int(input('Unfortunately there is no advantage to be had. You must defend yourself. Do you draw your [1] sword [2] axe or [3] spear? '))
+                boss_attack = random.randint(1, 3)  # 1: axe, 2: sword, 3: spear
+                if disarm_fail == 1:
+                    if boss_attack == 1:
+                        print('With fine footwork and deft blade you overwhelm the bandit and end his life.')
+                        win_con += 1
+                    elif boss_attack == 2:
+                        disarm_fail = int(input('Your blades cross but neither can find an opening. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if disarm_fail == 3:
+                            print("Your lance thrusteth sure. You win!")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                    else:
+                        print("The bandit's spear outmaneuvers you. You are slain. GAME OVER")
+                        exit()
+                elif disarm_fail == 2:
+                    if boss_attack == 1:
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+                    elif boss_attack == 2:
+                        disarm_fail = int(input('Your blades cross but neither can find an opening. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if disarm_fail == 1:
+                            print("Your blade disarms and slays the bandit. You win!")
+                            win_con += 1
+                        else:
+                            print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                            exit()
+                    else:
+                        print("Your axe shatters the bandit's spear. You win!")
+                        win_con += 1
+                elif disarm_fail == 3:
+                    if boss_attack == 1:
+                        print("Your lance thrusteth sure. You win!")
+                        win_con += 1
+                    elif boss_attack == 2:
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+                    else:
+                        disarm_fail = int(input('Your spears cross but neither can find an opening. Do you choose [1] sword [2] axe or [3] spear? '))
+                        if disarm_fail == 1:
+                            print("Your blade disarms and slays the bandit. You win!")
+                            win_con += 1
+                        else:
+                            print("The bandit's spear disarms you. Weaponless you are slain. GAME OVER")
+                            exit()
+        elif Boss_initial == 'fight':
+            print("You ready your weapon.")
+            boss_fight = int(input('Choose your weapon. Do you draw your [1] sword [2] axe or [3] spear? '))
+            boss_attack = random.randint(1, 3)  # 1: axe, 2: sword, 3: spear
+            if boss_fight == 1:
+                if boss_attack == 1:
+                    print('With fine footwork and deft blade you overwhelm the bandit and end his life.')
+                    win_con += 1
+                elif boss_attack == 2:
+                    boss_fight = int(input('Your blades cross but neither can find an opening. Do you choose [1] sword [2] axe or [3] spear? '))
+                    if boss_fight == 3:
+                        print("Your lance thrusteth sure. You win!")
+                        win_con += 1
+                    else:
+                        print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                        exit()
+                else:
+                    print("The bandit's spear outmaneuvers you. You are slain. GAME OVER")
+                    exit()
+            elif boss_fight == 2:
+                if boss_attack == 1:
+                    print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                    exit()
+                elif boss_attack == 2:
+                    boss_fight = int(input('Your blades cross but neither can find an opening. Do you choose [1] sword [2] axe or [3] spear? '))
+                    if boss_fight == 1:
+                        print("Your blade disarms and slays the bandit. You win!")
+                        win_con += 1
+                    else:
+                        print("The bandit's sword disarms you. Weaponless you are slain. GAME OVER")
+                        exit()
+                else:
+                    print("Your axe shatters the bandit's spear. You win!")
+                    win_con += 1
+            elif boss_fight == 3:
+                if boss_attack == 3:
+                    print("Your lance thrusteth sure. You win!")
+                    win_con += 1
+                elif boss_attack == 2:
+                    print("The bandit's deft movements disarm you. Weaponless you are slain. GAME OVER")
+                    exit()
+                else:
+                    boss_fight = int(input('Your spears cross but neither can find an openingYou choose. Do you choose [1] sword [2] axe or [3] spear? '))
+                    if boss_fight == 1:
+                        print("Your blade disarms and slays the bandit. You win!")
+                        win_con += 1
+                    else:
+                        print("The bandit's spear disarms you. Weaponless you are slain. GAME OVER")
+                        exit()
+
+        if win_con == 2:
+            print('''Congratulations! 
+            You have defeated the bandit leader and claimed the hoard. Victory is yours!
+            Your rentinue catches up with you in the cave. Your squire speaks
+            "Milord, I was so worried about you. Luckily these vagabonds can't stand
+            against your might, now claim your reward"
+            ''')
+            ending = input ('Do you [claim] the treasure or [leave]?')
+            if ending == 'claim':
+              print ('You and your company go through the loot. You find a sword with a large red gem inside of it, it glows with awesome power. TO BE CONTINUED')
+            else:
+              print ('Maybe the real treasure was the friends we made along the away. CHAPTER COMPLETE. ')
+            exit()
